@@ -11,6 +11,8 @@ async function init(){
           .then(response => response.text())
 
       const engine = new PdfTeXEngine();
+      engine.texlive_endpoint = '';
+      engine.setTexliveEndpoint('/');
       await engine.loadEngine();
       engine.writeMemFSFile("main.tex", template);
       engine.setEngineMainFile("main.tex");
