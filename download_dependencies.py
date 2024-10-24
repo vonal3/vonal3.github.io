@@ -14,11 +14,13 @@ def download_dependencies():
         filepath = pathlib.Path(path)
         target_filepath = target_path.joinpath(filepath)
         target_filepath.parent.mkdir(parents=True, exist_ok=True)
-        target_filepath.touch()
-        response = requests.get(url)
+        response = requests.get(url, allow_redirects=True)
         response.raise_for_status()
 
-        print(target_filepath)
+        print(response.status_code, target_filepath)
+
+        if response.status_code != 200 or response.content == b'File not found':
+            continue
 
         with open(target_filepath, 'wb') as file:
             file.write(response.content)

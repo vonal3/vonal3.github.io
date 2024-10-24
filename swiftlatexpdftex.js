@@ -124,7 +124,8 @@ function compileLaTeXRoutine() {
         console.error("Compilation failed, with status code " + status);
         self.postMessage({"result": "failed", "status": status, "log": self.memlog, "cmd": "compile"})
     }
-    console.log(urls)
+    // Used for dependency collection
+    // console.log(urls)
 }
 
 function compileFormatRoutine() {
@@ -238,7 +239,8 @@ function kpse_find_file_impl(nameptr, format, _mustexist) {
     }
     if (xhr.status === 200) {
         let arraybuffer = xhr.response;
-        const fileid = xhr.getResponseHeader("fileid");
+        const fileid = xhr.getResponseHeader("fileid") || cacheKey.split('/').pop();
+        // console.log(fileid);
         const savepath = TEXCACHEROOT + "/" + fileid;
         FS.writeFile(savepath, new Uint8Array(arraybuffer));
         texlive200_cache[cacheKey] = savepath;
@@ -282,7 +284,8 @@ function kpse_find_pk_impl(nameptr, dpi) {
     }
     if (xhr.status === 200) {
         let arraybuffer = xhr.response;
-        const pkid = xhr.getResponseHeader("pkid");
+        const pkid = xhr.getResponseHeader("pkid") || cacheKey.split('/').pop();
+        // console.log(pkid);
         const savepath = TEXCACHEROOT + "/" + pkid;
         FS.writeFile(savepath, new Uint8Array(arraybuffer));
         pk200_cache[cacheKey] = savepath;

@@ -23,7 +23,7 @@ async function init(){
 
       engine = new PdfTeXEngine();
       await engine.loadEngine();
-      await engine.latexWorker.postMessage({ 'cmd': 'settexliveurl', 'url': '/dependencies' });
+      await engine.latexWorker.postMessage({ 'cmd': 'settexliveurl', 'url': '/dependencies/' });
       button.addEventListener('click', () => generate());
 }
 
