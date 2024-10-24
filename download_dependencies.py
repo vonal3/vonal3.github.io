@@ -18,8 +18,10 @@ def download_dependencies():
         response = requests.get(url)
         response.raise_for_status()
 
-        with open(target_filepath, 'w') as file:
-            file.write(response.text)
+        print(target_filepath)
+
+        with open(target_filepath, 'wb') as file:
+            file.write(response.content)
 
 
 
